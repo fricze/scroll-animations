@@ -46,10 +46,15 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 	}, []);
 
 	const frame = useCurrentFrame();
-	const scroll = interpolate(frame, [0, 20], [0, 1]);
+	const start = 220;
+	const scroll = interpolate(
+		frame,
+		[start, start + 40, start + 80],
+		[0, 1000, 0],
+	);
 
 	const scrollRef = useRef<HTMLDivElement>(null);
-	scrollRef.current?.scroll(0, scroll * 100);
+	scrollRef.current?.scroll(0, scroll);
 
 	return (
 		<ThemeProvider themeColors={themeColors}>
@@ -84,22 +89,11 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 				</div>
 
 				<div ref={scrollRef} style={{}} className="scroller-parent">
-					<h1 className="scroller">
-						Code transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition Code
-						transition Code transition Code transition Code transition
-					</h1>
+					{Array(15)
+						.fill(0)
+						.map(() => (
+							<div className="scroller" />
+						))}
 				</div>
 			</AbsoluteFill>
 			<RefreshOnCodeChange />
