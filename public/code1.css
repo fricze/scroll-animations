@@ -1,4 +1,13 @@
-.scroller {
+.parent {
+	border: 2px solid rgb(139, 148, 158);
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 3lh;
+}
+
+.block {
 	width: 100%;
 	flex: 1 0 100px;
 	background: rgb(11, 132, 243);

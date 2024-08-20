@@ -5,6 +5,9 @@
 }
 
 .block {
+	animation: background-change;
+	animation-timeline: scroll();
+
 	width: 100%;
 	flex: 1 0 100px;
 	background: rgb(11, 132, 243);

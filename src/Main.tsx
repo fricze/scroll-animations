@@ -53,8 +53,22 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 		[0, 1000, 0],
 	);
 
+	const parentProgress = interpolate(frame, [0, 30, 40], [0, 0, 1], {
+		extrapolateRight: 'clamp',
+	});
+
+	const contentProgress = interpolate(frame, [0, 80, 90], [0, 0, 1], {
+		extrapolateRight: 'clamp',
+	});
+	console.log(contentProgress);
+
 	const scrollRef = useRef<HTMLDivElement>(null);
 	scrollRef.current?.scroll(0, scroll);
+
+	const parentStyle = {
+		'--border-opacity': parentProgress,
+		'--child-opacity': contentProgress,
+	} as Record<string, string | number>;
 
 	return (
 		<ThemeProvider themeColors={themeColors}>
@@ -88,12 +102,18 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 					</AbsoluteFill>
 				</div>
 
-				<div ref={scrollRef} style={{}} className="scroller-parent">
-					{Array(15)
-						.fill(0)
-						.map(() => (
-							<div className="scroller" />
-						))}
+				<div
+					ref={scrollRef}
+					className={
+						parentProgress > 0 ? 'starting-parent parent' : 'starting-parent'
+					}
+					style={parentStyle}
+				>
+					{contentProgress > 0
+						? Array(15)
+								.fill(0)
+								.map(() => <div className="block" />)
+						: ''}
 				</div>
 			</AbsoluteFill>
 			<RefreshOnCodeChange />
