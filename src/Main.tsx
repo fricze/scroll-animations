@@ -53,14 +53,25 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 		[0, 1000, 0],
 	);
 
-	const parentProgress = interpolate(frame, [0, 30, 40], [0, 0, 1], {
-		extrapolateRight: 'clamp',
-	});
+	const parentStart = 30;
+	const parentProgress = interpolate(
+		frame,
+		[parentStart, parentStart + 10],
+		[0, 1],
+		{
+			extrapolateRight: 'clamp',
+		},
+	);
 
-	const contentProgress = interpolate(frame, [0, 80, 90], [0, 0, 1], {
-		extrapolateRight: 'clamp',
-	});
-	console.log(contentProgress);
+	const contentStart = 115;
+	const contentProgress = interpolate(
+		frame,
+		[contentStart, contentStart + 20],
+		[0, 9],
+		{
+			extrapolateRight: 'clamp',
+		},
+	);
 
 	const scrollRef = useRef<HTMLDivElement>(null);
 	scrollRef.current?.scroll(0, scroll);
@@ -68,7 +79,7 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 	const parentStyle = {
 		'--border-opacity': parentProgress,
 		'--child-opacity': contentProgress,
-	} as Record<string, string | number>;
+	} as React.CSSProperties;
 
 	return (
 		<ThemeProvider themeColors={themeColors}>
@@ -112,7 +123,12 @@ export const Main: React.FC<Props> = ({steps, themeColors, codeWidth}) => {
 					{contentProgress > 0
 						? Array(15)
 								.fill(0)
-								.map(() => <div className="block" />)
+								.map((_, i) => (
+									<div
+										className="block"
+										style={{'--delay': Math.min(i, 8)} as React.CSSProperties}
+									/>
+								))
 						: ''}
 				</div>
 			</AbsoluteFill>

@@ -17,7 +17,7 @@
 	flex: 1 0 100px;
 	background: rgb(11, 132, 243);
 	border-radius: 5px;
-	opacity: var(--child-opacity);
+	opacity: calc(var(--child-opacity) - var(--delay));
 }
 
 .parent {
